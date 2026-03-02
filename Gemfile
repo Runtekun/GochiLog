@@ -58,3 +58,6 @@ gem "tailwindcss-ruby", "3.4.17"
 
 # brakenmanをアップデートして、セキュリティの脆弱性を修正するために、バージョン8.0以上を指定
 gem "brakeman", "~> 8.0", require: false
+
+# 認証
+gem "devise"
