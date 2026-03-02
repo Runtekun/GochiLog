@@ -6,11 +6,19 @@
   <div class="relative z-10 max-w-6xl mx-auto px-4 py-16 text-center">
     <h1 class="text-4xl font-bold text-white mb-4">美味しいお店を見つけよう</h1>
     <p class="text-white text-lg mb-8">みんなのグルメレビューで、あなたの次の一食を見つける</p>
+
+    <% if user_signed_in? %>
       <div class="flex justify-center gap-4">
-        <%= link_to "新規登録", "new_user_registration_path",
+        <%= link_to "レビューを見る", "#",
             class: "bg-orange-500 text-white px-8 py-3 rounded-lg text-lg hover:bg-orange-600" %>
-        <%= link_to "ログイン", "new_user_session_path",
+      </div>
+    <% else %>
+      <div class="flex justify-center gap-4">
+        <%= link_to "新規登録", new_user_registration_path,
+            class: "bg-orange-500 text-white px-8 py-3 rounded-lg text-lg hover:bg-orange-600" %>
+        <%= link_to "ログイン", new_user_session_path,
             class: "border border-white text-white px-8 py-3 rounded-lg text-lg hover:bg-white hover:text-gray-800 transition" %>
       </div>
+    <% end %>
   </div>
 </div>
