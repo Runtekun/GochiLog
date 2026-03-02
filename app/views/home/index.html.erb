@@ -1,11 +1,16 @@
-<div class="max-w-6xl mx-auto px-4 py-16 text-center">
-  <h1 class="text-4xl font-bold text-gray-800 mb-4">美味しいお店を見つけよう</h1>
-  <p class="text-gray-500 text-lg mb-8">みんなのグルメレビューで、あなたの次の一食を見つける</p>
+<% content_for :full_width, true %>
 
-    <div class="flex justify-center gap-4">
-      <%= link_to "新規登録", "new_user_registration_path",
-          class: "bg-orange-500 text-white px-8 py-3 rounded-lg text-lg hover:bg-orange-600" %>
-      <%= link_to "ログイン", "new_user_session_path",
-          class: "border border-orange-500 text-orange-500 px-8 py-3 rounded-lg text-lg hover:bg-orange-50" %>
-    </div>
+<div class="relative min-h-screen bg-cover bg-center"
+     style="background-image: url('<%= asset_path('top.png') %>')">
+  <div class="absolute inset-0 bg-black opacity-40"></div>
+  <div class="relative z-10 max-w-6xl mx-auto px-4 py-16 text-center">
+    <h1 class="text-4xl font-bold text-white mb-4">美味しいお店を見つけよう</h1>
+    <p class="text-white text-lg mb-8">みんなのグルメレビューで、あなたの次の一食を見つける</p>
+      <div class="flex justify-center gap-4">
+        <%= link_to "新規登録", "new_user_registration_path",
+            class: "bg-orange-500 text-white px-8 py-3 rounded-lg text-lg hover:bg-orange-600" %>
+        <%= link_to "ログイン", "new_user_session_path",
+            class: "border border-white text-white px-8 py-3 rounded-lg text-lg hover:bg-white hover:text-gray-800 transition" %>
+      </div>
+  </div>
 </div>

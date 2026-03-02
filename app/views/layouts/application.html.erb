@@ -20,9 +20,13 @@
 
   <body class="bg-gray-50 min-h-screen flex flex-col">
     <%= render 'layouts/header' %>
+  <% if content_for?(:full_width) %>
+    <main class="flex-1">
+  <% else %>
     <main class="flex-1 container mx-auto px-5">
-      <%= yield %>
-    </main>
+  <% end %>
+    <%= yield %>
+  </main>
     <%= render 'layouts/footer' %>
   </body>
 </html>
