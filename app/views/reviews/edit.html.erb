@@ -1,4 +1,46 @@
-<div>
-  <h1 class="font-bold text-4xl">Reviews#edit</h1>
-  <p>Find me in app/views/reviews/edit.html.erb</p>
+<div class="max-w-2xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">レビューを編集</h1>
+
+  <%= form_with model: @review, data: { turbo: false }, class: "space-y-4" do |f| %>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">
+        評価 <span class="text-red-500">*</span>
+      </label>
+      <select name="review[rating]" required
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <% (1..5).each do |i| %>
+          <option value="<%= i %>" <%= "selected" if @review.rating == i %>>
+            <%= "★" * i + "☆" * (5 - i) %> (<%= i %>)
+          </option>
+        <% end %>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">
+        コメント <span class="text-red-500">*</span>
+      </label>
+      <%= f.text_area :body, rows: 4, required: true,
+          class: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400" %>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">写真</label>
+      <% if @review.image.attached? %>
+        <div class="mb-2">
+          <%= image_tag @review.image, class: "w-32 h-24 object-cover rounded" %>
+          <p class="text-xs text-gray-400 mt-1">新しい画像を選択すると差し替えられます</p>
+        </div>
+      <% end %>
+      <%= f.file_field :image, accept: "image/*",
+          class: "w-full border border-gray-300 rounded-lg px-3 py-2" %>
+    </div>
+
+    <div class="flex gap-3">
+      <%= f.submit "更新する",
+          class: "flex-1 bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 cursor-pointer" %>
+      <%= link_to "キャンセル", review_path(@review),
+          class: "flex-1 text-center border border-gray-300 py-3 rounded-lg text-gray-600 hover:bg-gray-50" %>
+    </div>
+  <% end %>
 </div>
