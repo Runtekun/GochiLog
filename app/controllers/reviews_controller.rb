@@ -27,7 +27,7 @@ class ReviewsController < ApplicationController
     @review.user = current_user
 
     if @review.save
-      redirect_to @review, notice: 'レビューを投稿しました！'
+      redirect_to reviews_path, notice: 'レビューを投稿しました！'
     else
       @shop.destroy
       render :new, status: :unprocessable_entity
