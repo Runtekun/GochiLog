@@ -1,4 +1,41 @@
-<div>
-  <h1 class="font-bold text-4xl">Maps#index</h1>
-  <p>Find me in app/views/maps/index.html.erb</p>
+<div class="relative w-full" style="height: calc(100vh - 64px);">
+  <div id="map" class="w-full h-full"></div>
 </div>
+
+<script>
+const shopsData = <%= @shops_json.html_safe %>;
+
+function initMap() {
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 35.6812, lng: 139.7671 },
+    zoom: 12
+  });
+
+  shopsData.forEach(shop => {
+    const marker = new google.maps.Marker({
+      position: { lat: shop.latitude, lng: shop.longitude },
+      map: map,
+      title: shop.name,
+      icon: {
+        url: "https://maps.google.com/mapfiles/ms/icons/restaurant.png"
+      }
+    });
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: `
+        <div style="min-width:150px; padding:4px">
+          <strong>${shop.name}</strong><br>
+          ${shop.review_id
+            ? `<a href="/reviews/${shop.review_id}" style="color:#f97316">レビューを見る →</a>`
+            : ""}
+        </div>
+      `
+    });
+
+    marker.addListener("click", () => {
+      infoWindow.open(map, marker);
+    });
+  });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap" async defer></script>
