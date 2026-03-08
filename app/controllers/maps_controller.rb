@@ -1,5 +1,4 @@
 class MapsController < ApplicationController
-
   def index
     # すべての店舗とその店舗に関連するレビューを取得し、JSON形式で返す
     @shops = Shop.includes(:reviews).all

@@ -24,5 +24,4 @@ Rails.application.routes.draw do
   resources :reviews
 
   get "maps", to: "maps#index"
-
 end

@@ -63,4 +63,3 @@ gem "brakeman", "~> 8.0", require: false
 gem "devise"
 # 環境変数を管理するためのgem
 gem "dotenv-rails"
-
