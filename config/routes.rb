@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "maps/index"
   get "reviews/index"
   get "reviews/show"
   get "reviews/new"
@@ -21,4 +22,6 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :reviews
+
+  get "maps", to: "maps#index"
 end
