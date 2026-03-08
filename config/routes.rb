@@ -22,4 +22,7 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :reviews
+
+  get "maps", to: "maps#index"
+
 end
