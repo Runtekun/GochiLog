@@ -1,12 +1,4 @@
 Rails.application.routes.draw do
-  get "maps/index"
-  get "reviews/index"
-  get "reviews/show"
-  get "reviews/new"
-  get "reviews/create"
-  get "reviews/edit"
-  get "reviews/update"
-  get "reviews/destroy"
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -24,4 +16,6 @@ Rails.application.routes.draw do
   resources :reviews
 
   get "maps", to: "maps#index"
+
+  resources :users, only: [:show, :edit, :update]
 end
