@@ -17,5 +17,5 @@ Rails.application.routes.draw do
 
   get "maps", to: "maps#index"
 
-  resources :users, only: [:show, :edit, :update]
+  resources :users, only: [:show] 
 end
