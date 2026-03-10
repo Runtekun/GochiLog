@@ -20,8 +20,28 @@
             class: "text-sm text-gray-600 hover:text-gray-900 transition" %>
         <%= link_to "マップ", maps_path,
             class: "text-sm text-gray-600 hover:text-gray-900 transition" %>
-        <%= button_to "ログアウト", destroy_user_session_path, method: :delete,
-            class: "text-sm text-gray-400 hover:text-red-500 transition" %>
+
+        <!-- アバタードロップダウン -->
+        <div class="relative" id="avatar-wrapper">
+          <button id="avatar-btn" class="focus:outline-none">
+            <% if current_user.avatar.attached? %>
+              <%= image_tag current_user.avatar, class: "w-8 h-8 rounded-full object-cover hover:opacity-80 transition" %>
+            <% else %>
+              <div class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-sm hover:opacity-80 transition">
+                <%= current_user.name.first.upcase %>
+              </div>
+            <% end %>
+          </button>
+
+          <!-- ドロップダウンメニュー -->
+          <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50">
+            <%= link_to "プロフィール", edit_user_registration_path,
+                class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
+            <%= button_to "ログアウト", destroy_user_session_path, method: :delete,
+                class: "w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-50" %>
+          </div>
+        </div>
+
       <% else %>
         <%= link_to "ログイン", new_user_session_path,
             class: "text-sm text-gray-600 hover:text-gray-900 transition" %>
@@ -31,3 +51,19 @@
     </div>
   </div>
 </header>
+
+<script>
+  const avatarBtn = document.getElementById("avatar-btn");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+  const avatarWrapper = document.getElementById("avatar-wrapper");
+
+  avatarBtn.addEventListener("click", function() {
+    dropdownMenu.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", function(e) {
+    if (!avatarWrapper.contains(e.target)) {
+      dropdownMenu.classList.add("hidden");
+    }
+  });
+</script>
