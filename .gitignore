@@ -43,3 +43,6 @@
 /vendor/bundle
 
 .env
+
+# Claude Code local settings
+/.claude/

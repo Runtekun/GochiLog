@@ -57,6 +57,39 @@ edit「キャンセル」→ user_path(current_user)（show）
 - scriptタグはヘッダーパーシャルの `</header>` 直後に配置
 - 外クリック判定は `stopPropagation` ではなく `contains()` を使う（Turbo対応）
 
+## リリース状況
+
+### MVPリリース済み機能
+- ユーザー認証（Devise）
+- レビュー投稿・一覧・詳細
+- マップ表示
+- ユーザープロフィール（表示・編集）
+
+### 本リリースで追加予定の機能
+
+#### ① いいね機能
+- ユーザーがレビューにいいねできる
+- テーブル: `likes`（id, user_id, review_id, created_at）
+- 制約: user_id + review_id の組み合わせは一意
+- 機能: いいね・いいね解除・いいね数表示
+
+#### ② ジャンル機能
+- レビューにジャンルを設定（ラーメン・カフェ・居酒屋・寿司など）
+- テーブル: `genres`（id, name）
+- reviewsに `genre_id` カラムを追加
+
+#### ③ フォロー機能
+- ユーザー同士のフォロー
+- テーブル: `relationships`（id, follower_id, followed_id, created_at）
+
+#### ④ 検索機能
+- 検索対象: 店名・ユーザー・ジャンル
+- Ransack を使用
+
+#### ⑤ 現在地表示機能
+- ブラウザの Geolocation API（navigator.geolocation）を使用
+- 現在地取得・現在地マーカー表示
+
 ## ブランチ戦略
 
 - `main` - 本番
