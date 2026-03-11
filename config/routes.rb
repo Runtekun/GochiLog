@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
 
-  resources :reviews
+  resources :reviews do
+    resource :like, only: [ :create, :destroy ]
+  end
 
   get "maps", to: "maps#index"
 

@@ -1,0 +1,14 @@
+<div id="like_<%= review.id %>">
+  <% liked = current_user&.likes&.exists?(review_id: review.id) %>
+  <% if liked %>
+    <%= button_to review_like_path(review), method: :delete,
+        class: "flex items-center gap-1 text-red-500 hover:text-red-600 transition text-sm" do %>
+      <span>❤️</span><span><%= review.likes.count %></span>
+    <% end %>
+  <% else %>
+    <%= button_to review_like_path(review), method: :post,
+        class: "flex items-center gap-1 text-gray-400 hover:text-red-400 transition text-sm" do %>
+      <span>🤍</span><span><%= review.likes.count %></span>
+    <% end %>
+  <% end %>
+</div>
