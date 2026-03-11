@@ -21,8 +21,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource.update_without_password(params)
   end
 
-  # ユーザーがプロフィールを更新する際に、現在のパスワードを要求するかどうかを判断するメソッド
   def after_sign_up_path_for(resource)
     reviews_path
+  end
+
+  def after_update_path_for(resource)
+    user_path(resource)
   end
 end
