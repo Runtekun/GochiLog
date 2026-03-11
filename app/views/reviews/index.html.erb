@@ -7,34 +7,48 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <% @reviews.each do |review| %>
-      <%= link_to review_path(review), class: "block bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden" do %>
-        <% if review.image.attached? %>
-          <%= image_tag review.image, class: "w-full h-48 object-cover" %>
-        <% else %>
-          <div class="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-4xl">🍽️</div>
+      <div class="relative bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden">
+        <%= link_to review_path(review), class: "block" do %>
+          <% if review.image.attached? %>
+            <%= image_tag review.image, class: "w-full h-48 object-cover" %>
+          <% else %>
+            <div class="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-4xl">🍽️</div>
+          <% end %>
+
+          <div class="p-4">
+            <h2 class="font-bold text-gray-800 text-lg mb-1"><%= review.shop.name %></h2>
+
+            <div class="flex items-center mb-2">
+              <% review.rating.times do %>
+                <span class="text-yellow-400">★</span>
+              <% end %>
+              <% (5 - review.rating).times do %>
+                <span class="text-gray-300">★</span>
+              <% end %>
+              <span class="text-gray-500 text-sm ml-1">(<%= review.rating %>)</span>
+            </div>
+
+            <p class="text-gray-600 text-sm line-clamp-2"><%= review.body %></p>
+
+            <div class="mt-3 flex items-center justify-between">
+              <div class="w-24"></div>
+              <span class="text-xs text-gray-400"><%= review.created_at.strftime("%Y/%m/%d") %></span>
+            </div>
+          </div>
         <% end %>
 
-        <div class="p-4">
-          <h2 class="font-bold text-gray-800 text-lg mb-1"><%= review.shop.name %></h2>
-
-          <div class="flex items-center mb-2">
-            <% review.rating.times do %>
-              <span class="text-yellow-400">★</span>
-            <% end %>
-            <% (5 - review.rating).times do %>
-              <span class="text-gray-300">★</span>
-            <% end %>
-            <span class="text-gray-500 text-sm ml-1">(<%= review.rating %>)</span>
-          </div>
-
-          <p class="text-gray-600 text-sm line-clamp-2"><%= review.body %></p>
-
-          <div class="mt-3 flex items-center justify-between text-xs text-gray-400">
-            <span><%= review.user.name %></span>
-            <span><%= review.created_at.strftime("%Y/%m/%d") %></span>
-          </div>
-        </div>
-      <% end %>
+        <!-- ユーザーアイコン（レビューリンクの外に配置） -->
+        <%= link_to user_path(review.user), class: "absolute bottom-4 left-4 flex items-center gap-2 z-10" do %>
+          <% if review.user.avatar.attached? %>
+            <%= image_tag review.user.avatar, class: "w-6 h-6 rounded-full object-cover" %>
+          <% else %>
+            <div class="w-6 h-6 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-xs">
+              <%= review.user.name.first.upcase %>
+            </div>
+          <% end %>
+          <span class="text-xs text-gray-500 hover:text-gray-800 transition"><%= review.user.name %></span>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>

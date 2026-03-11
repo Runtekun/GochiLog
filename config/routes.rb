@@ -1,13 +1,5 @@
 Rails.application.routes.draw do
-  get "maps/index"
-  get "reviews/index"
-  get "reviews/show"
-  get "reviews/new"
-  get "reviews/create"
-  get "reviews/edit"
-  get "reviews/update"
-  get "reviews/destroy"
-  devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -24,4 +16,6 @@ Rails.application.routes.draw do
   resources :reviews
 
   get "maps", to: "maps#index"
+
+  resources :users, only: [ :show ]
 end
