@@ -1,0 +1,57 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+
+  <!-- プロフィールセクション -->
+  <div class="bg-white rounded-xl shadow p-6 mb-8 flex items-start gap-6">
+    <% if @user.avatar.attached? %>
+      <%= image_tag @user.avatar, class: "w-20 h-20 rounded-full object-cover flex-shrink-0" %>
+    <% else %>
+      <div class="w-20 h-20 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-2xl flex-shrink-0">
+        <%= @user.name.first.upcase %>
+      </div>
+    <% end %>
+
+    <div class="flex-1">
+      <h1 class="text-xl font-bold text-gray-800 mb-1"><%= @user.name %></h1>
+      <p class="text-gray-500 text-sm mb-4"><%= @user.bio.present? ? @user.bio : "自己紹介はまだありません" %></p>
+      <% if current_user == @user %>
+        <%= link_to "プロフィールを編集", edit_user_registration_path,
+            class: "text-sm border border-gray-300 px-4 py-1.5 rounded-lg text-gray-600 hover:bg-gray-50 transition" %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- レビュー一覧 -->
+  <h2 class="text-lg font-bold text-gray-800 mb-4">投稿したレビュー（<%= @reviews.count %>件）</h2>
+
+  <% if @reviews.empty? %>
+    <p class="text-gray-400 text-sm">まだレビューはありません</p>
+  <% else %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @reviews.each do |review| %>
+        <%= link_to review_path(review), class: "block bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden" do %>
+          <% if review.image.attached? %>
+            <%= image_tag review.image, class: "w-full h-48 object-cover" %>
+          <% else %>
+            <div class="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-4xl">🍽️</div>
+          <% end %>
+
+          <div class="p-4">
+            <h3 class="font-bold text-gray-800 text-lg mb-1"><%= review.shop.name %></h3>
+            <div class="flex items-center mb-2">
+              <% review.rating.times do %>
+                <span class="text-yellow-400">★</span>
+              <% end %>
+              <% (5 - review.rating).times do %>
+                <span class="text-gray-300">★</span>
+              <% end %>
+              <span class="text-gray-500 text-sm ml-1">(<%= review.rating %>)</span>
+            </div>
+            <p class="text-gray-600 text-sm line-clamp-2"><%= review.body %></p>
+            <p class="text-xs text-gray-400 mt-3"><%= review.created_at.strftime("%Y/%m/%d") %></p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+</div>
