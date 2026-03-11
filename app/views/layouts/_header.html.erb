@@ -51,19 +51,3 @@
     </div>
   </div>
 </header>
-
-<script>
-  const avatarBtn = document.getElementById("avatar-btn");
-  const dropdownMenu = document.getElementById("dropdown-menu");
-  const avatarWrapper = document.getElementById("avatar-wrapper");
-
-  avatarBtn.addEventListener("click", function() {
-    dropdownMenu.classList.toggle("hidden");
-  });
-
-  document.addEventListener("click", function(e) {
-    if (!avatarWrapper.contains(e.target)) {
-      dropdownMenu.classList.add("hidden");
-    }
-  });
-</script>
