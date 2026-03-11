@@ -1,0 +1,49 @@
+ja:
+  devise:
+    confirmations:
+      confirmed: "メールアドレスの確認が完了しました。"
+      send_instructions: "確認メールを送信しました。"
+      send_paranoid_instructions: "メールアドレスが登録済みの場合、確認メールが届きます。"
+    failure:
+      already_authenticated: "すでにログインしています。"
+      inactive: "アカウントが有効化されていません。"
+      invalid: "メールアドレスまたはパスワードが違います。"
+      locked: "アカウントがロックされています。"
+      last_attempt: "もう一度失敗するとアカウントがロックされます。"
+      not_found_in_database: "メールアドレスまたはパスワードが違います。"
+      timeout: "セッションの有効期限が切れました。もう一度ログインしてください。"
+      unauthenticated: "ログインしてください。"
+      unconfirmed: "メールアドレスの確認が必要です。"
+    mailer:
+      confirmation_instructions:
+        subject: "メールアドレスの確認"
+      reset_password_instructions:
+        subject: "パスワードのリセット"
+      unlock_instructions:
+        subject: "アカウントのロック解除"
+    omniauth_callbacks:
+      failure: "%{kind} アカウントの認証に失敗しました。"
+      success: "%{kind} アカウントで認証しました。"
+    passwords:
+      no_token: "このページにはアクセスできません。パスワードリセットのメールからアクセスしてください。"
+      send_instructions: "パスワードのリセット方法をメールで送信しました。"
+      send_paranoid_instructions: "メールアドレスが登録済みの場合、パスワードのリセット方法が届きます。"
+      updated: "パスワードを変更しました。"
+      updated_not_active: "パスワードを変更しました。"
+    registrations:
+      destroyed: "アカウントを削除しました。"
+      signed_up: "アカウントを登録しました。"
+      signed_up_but_inactive: "アカウントを登録しましたが、まだ有効化されていません。"
+      signed_up_but_locked: "アカウントを登録しましたが、ロックされています。"
+      signed_up_but_unconfirmed: "確認メールを送信しました。メール内のリンクからアカウントを有効化してください。"
+      update_needs_confirmation: "アカウント情報を更新しました。メールアドレスの確認が必要です。"
+      updated: "プロフィールを更新しました。"
+      updated_but_not_signed_in: "プロフィールを更新しましたが、再度ログインが必要です。"
+    sessions:
+      signed_in: "ログインしました。"
+      signed_out: "ログアウトしました。"
+      already_signed_out: "すでにログアウトしています。"
+    unlocks:
+      send_instructions: "ロック解除のメールを送信しました。"
+      send_paranoid_instructions: "メールアドレスが登録済みの場合、ロック解除の方法が届きます。"
+      unlocked: "アカウントのロックを解除しました。"
