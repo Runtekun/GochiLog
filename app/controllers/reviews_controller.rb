@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_review, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_genres, only: [ :new, :create, :edit, :update ]
 
 
   def index
@@ -57,6 +58,10 @@ class ReviewsController < ApplicationController
   end
 
   def review_params
-    params.require(:review).permit(:body, :rating, :image)
+    params.require(:review).permit(:body, :rating, :image, :genre_id)
+  end
+
+  def set_genres
+    @genres = Genre.all
   end
 end
