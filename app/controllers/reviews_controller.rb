@@ -5,7 +5,7 @@ class ReviewsController < ApplicationController
 
 
   def index
-    @reviews = Review.includes(:user, :shop).order(created_at: :desc)
+    @reviews = Review.includes(:user, :shop, :genre).order(created_at: :desc)
   end
 
   def show

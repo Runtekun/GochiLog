@@ -9,11 +9,18 @@
     <% @reviews.each do |review| %>
       <div class="relative bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden">
         <%= link_to review_path(review), class: "block" do %>
-          <% if review.image.attached? %>
-            <%= image_tag review.image, class: "w-full h-48 object-cover" %>
-          <% else %>
-            <div class="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-4xl">🍽️</div>
-          <% end %>
+          <div class="relative">
+            <% if review.image.attached? %>
+              <%= image_tag review.image, class: "w-full h-48 object-cover" %>
+            <% else %>
+              <div class="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-4xl">🍽️</div>
+            <% end %>
+            <% if review.genre %>
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs font-medium <%= genre_badge_class(review.genre.name) %>">
+                <%= review.genre.name %>
+              </span>
+            <% end %>
+          </div>
 
           <div class="p-4">
             <h2 class="font-bold text-gray-800 text-lg mb-1"><%= review.shop.name %></h2>
@@ -34,8 +41,14 @@
               <div class="w-24"></div>
               <span class="text-xs text-gray-400"><%= review.created_at.strftime("%Y/%m/%d") %></span>
             </div>
+            <div class="h-8"></div>
           </div>
         <% end %>
+
+        <!-- いいねボタン（レビューリンクの外に配置） -->
+        <div class="absolute bottom-4 right-4 z-10">
+          <%= render "likes/like_button", review: review %>
+        </div>
 
         <!-- ユーザーアイコン（レビューリンクの外に配置） -->
         <%= link_to user_path(review.user), class: "absolute bottom-4 left-4 flex items-center gap-2 z-10" do %>
