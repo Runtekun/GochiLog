@@ -1,6 +1,7 @@
 class Review < ApplicationRecord
     belongs_to :user
     belongs_to :shop
+    belongs_to :genre, optional: true
     has_one_attached :image
     has_many :likes, dependent: :destroy
 

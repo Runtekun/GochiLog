@@ -7,3 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+[ "ラーメン", "カフェ", "居酒屋", "寿司", "焼肉", "イタリアン", "中華", "レストラン", "その他" ].each do |name|
+  Genre.find_or_create_by!(name: name)
+end

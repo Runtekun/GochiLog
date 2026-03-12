@@ -9,6 +9,12 @@
     <div class="p-6">
       <h1 class="text-2xl font-bold text-gray-800 mb-2"><%= @review.shop.name %></h1>
 
+      <% if @review.genre %>
+        <span class="inline-block px-3 py-1 rounded-full text-sm font-medium mb-3 <%= genre_badge_class(@review.genre.name) %>">
+          <%= @review.genre.name %>
+        </span>
+      <% end %>
+
       <div class="flex items-center mb-4">
         <% @review.rating.times do %>
           <span class="text-yellow-400 text-xl">★</span>
@@ -32,7 +38,10 @@
           <% end %>
           <span class="text-gray-600"><%= @review.user.name %></span>
         </div>
-        <span class="text-gray-400 text-sm"><%= @review.created_at.strftime("%Y年%m月%d日") %></span>
+        <div class="flex items-center gap-4">
+          <%= render "likes/like_button", review: @review %>
+          <span class="text-gray-400 text-sm"><%= @review.created_at.strftime("%Y年%m月%d日") %></span>
+        </div>
       </div>
 
       <% if user_signed_in? && @review.user == current_user %>
