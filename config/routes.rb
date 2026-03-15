@@ -19,5 +19,7 @@ Rails.application.routes.draw do
 
   get "maps", to: "maps#index"
 
-  resources :users, only: [ :show ]
+  resources :users, only: [ :show ] do
+    resource :follow, only: [ :create, :destroy ]
+  end
 end
