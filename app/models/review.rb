@@ -7,4 +7,12 @@ class Review < ApplicationRecord
 
     validates :body, presence: true
     validates :rating, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }
+
+    def self.ransackable_attributes(auth_object = nil)
+      [ "body", "created_at", "genre_id", "id", "rating", "shop_id", "updated_at", "user_id" ]
+    end
+
+    def self.ransackable_associations(auth_object = nil)
+      [ "shop", "user", "genre" ]
+    end
 end
