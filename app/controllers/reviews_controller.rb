@@ -5,7 +5,8 @@ class ReviewsController < ApplicationController
 
 
   def index
-    @reviews = Review.includes(:user, :shop, :genre).order(created_at: :desc)
+    @q = Review.ransack(params[:q])
+    @reviews = @q.result.includes(:user, :shop, :genre).order(created_at: :desc)
   end
 
   def show
