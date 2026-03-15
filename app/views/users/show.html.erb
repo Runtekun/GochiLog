@@ -12,10 +12,16 @@
 
     <div class="flex-1">
       <h1 class="text-xl font-bold text-gray-800 mb-1"><%= @user.name %></h1>
-      <p class="text-gray-500 text-sm mb-4"><%= @user.bio.present? ? @user.bio : "自己紹介はまだありません" %></p>
+      <p class="text-gray-500 text-sm mb-3"><%= @user.bio.present? ? @user.bio : "自己紹介はまだありません" %></p>
+      <div class="flex items-center gap-4 mb-3 text-sm text-gray-500">
+        <span><span class="font-bold text-gray-800"><%= @user.followers.count %></span> フォロワー</span>
+        <span><span class="font-bold text-gray-800"><%= @user.following.count %></span> フォロー中</span>
+      </div>
       <% if current_user == @user %>
         <%= link_to "プロフィールを編集", edit_user_registration_path,
             class: "text-sm border border-gray-300 px-4 py-1.5 rounded-lg text-gray-600 hover:bg-gray-50 transition" %>
+      <% else %>
+        <%= render "follows/follow_button", user: @user %>
       <% end %>
     </div>
   </div>

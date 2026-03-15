@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_03_12_145051) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_15_085538) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,16 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_12_145051) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+  create_table "relationships", force: :cascade do |t|
+    t.bigint "follower_id", null: false
+    t.bigint "followed_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "index_relationships_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.text "body"
     t.integer "rating"
@@ -97,6 +107,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_12_145051) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "likes", "reviews"
   add_foreign_key "likes", "users"
+  add_foreign_key "relationships", "users", column: "followed_id"
+  add_foreign_key "relationships", "users", column: "follower_id"
   add_foreign_key "reviews", "genres"
   add_foreign_key "reviews", "shops"
   add_foreign_key "reviews", "users"
