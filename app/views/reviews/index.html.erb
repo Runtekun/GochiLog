@@ -1,26 +1,27 @@
 <div class="max-w-6xl mx-auto px-4 py-8">
-  <div class="flex items-center justify-between mb-4">
-    <h1 class="text-2xl font-bold text-gray-800">レビュー一覧</h1>
-    <%= link_to "＋ レビューを投稿", new_review_path,
-        class: "bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition" %>
-  </div>
+  <div class="flex items-center gap-4 mb-6">
+    <h1 class="text-2xl font-bold text-gray-800 shrink-0">レビュー一覧</h1>
 
-  <%= search_form_for @q, url: reviews_path, html: { class: "mb-6 max-w-sm" } do |f| %>
-    <div class="flex gap-2">
-      <%= f.search_field :shop_name_or_user_name_or_genre_name_cont,
-          placeholder: "店名・ユーザー・ジャンル",
-          list: "search-suggestions",
-          autocomplete: "off",
-          class: "flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" %>
-      <%= f.submit "検索",
-          class: "bg-orange-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-orange-600 transition cursor-pointer" %>
-    </div>
-    <datalist id="search-suggestions">
-      <% @autocomplete_items.each do |item| %>
-        <option value="<%= item %>">
-      <% end %>
-    </datalist>
-  <% end %>
+    <%= search_form_for @q, url: reviews_path, html: { class: "flex-1 flex justify-center" } do |f| %>
+      <div class="flex gap-2 w-full max-w-md">
+        <%= f.search_field :shop_name_or_user_name_or_genre_name_cont,
+            placeholder: "店名・ユーザー・ジャンル",
+            list: "search-suggestions",
+            autocomplete: "off",
+            class: "flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" %>
+        <%= f.submit "検索",
+            class: "bg-orange-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-orange-600 transition cursor-pointer" %>
+      </div>
+      <datalist id="search-suggestions">
+        <% @autocomplete_items.each do |item| %>
+          <option value="<%= item %>">
+        <% end %>
+      </datalist>
+    <% end %>
+
+    <%= link_to "＋ レビューを投稿", new_review_path,
+        class: "shrink-0 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition" %>
+  </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <% @reviews.each do |review| %>
