@@ -32,6 +32,10 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    [ "id", "name", "created_at", "updated_at" ]
+  end
+
   # ユーザーがプロフィールを更新する際に、現在のパスワードを要求するかどうかを判断するメソッド
   def password_required?
     new_record? || password.present? || password_confirmation.present?
