@@ -18,6 +18,8 @@
       <% if user_signed_in? %>
         <%= link_to "レビュー一覧", reviews_path,
             class: "text-sm text-gray-600 hover:text-gray-900 transition" %>
+        <%= link_to "ユーザー", users_path,
+            class: "text-sm text-gray-600 hover:text-gray-900 transition" %>
         <%= link_to "マップ", maps_path,
             class: "text-sm text-gray-600 hover:text-gray-900 transition" %>
 
