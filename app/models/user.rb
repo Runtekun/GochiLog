@@ -37,6 +37,11 @@ class User < ApplicationRecord
     [ "id", "name", "created_at", "updated_at" ]
   end
 
+  # Ransackで検索可能な関連を指定するメソッド
+  def self.ransackable_associations(auth_object = nil)
+    [ "reviews" ]
+  end
+
   # ユーザーがプロフィールを更新する際に、現在のパスワードを要求するかどうかを判断するメソッド
   def password_required?
     new_record? || password.present? || password_confirmation.present?
