@@ -69,8 +69,11 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Install JS dependencies
+        run: yarn install
+
       - name: Build assets
-        run: bundle exec rails tailwindcss:build
+        run: yarn build && bundle exec rails tailwindcss:build
 
       - name: Run tests
         env:
