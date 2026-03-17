@@ -65,30 +65,33 @@ edit「キャンセル」→ user_path(current_user)（show）
 - マップ表示
 - ユーザープロフィール（表示・編集）
 
-### 本リリースで追加予定の機能
+### 本リリース実装済み機能
+- ① いいね機能（likes テーブル、Turbo Stream）
+- ② ジャンル機能（genres テーブル、genre_id カラム）
+- ③ フォロー機能（relationships テーブル、Turbo Stream）
+- ④ 検索機能（Ransack、オートコンプリート datalist）
+- ⑤ 現在地表示機能（Geolocation API、青丸マーカー）
 
-#### ① いいね機能
-- ユーザーがレビューにいいねできる
-- テーブル: `likes`（id, user_id, review_id, created_at）
-- 制約: user_id + review_id の組み合わせは一意
-- 機能: いいね・いいね解除・いいね数表示
+### 本リリースに向けたロードマップ
 
-#### ② ジャンル機能
-- レビューにジャンルを設定（ラーメン・カフェ・居酒屋・寿司など）
-- テーブル: `genres`（id, name）
-- reviewsに `genre_id` カラムを追加
+#### 品質・開発基盤
+- [ ] RSpec（リクエストテスト中心 + モデルテスト）
+- [ ] CI（GitHub Actions、RSpecと連携）
+- [ ] Rubocop（Lintチェック・リファクタリング）
 
-#### ③ フォロー機能
-- ユーザー同士のフォロー
-- テーブル: `relationships`（id, follower_id, followed_id, created_at）
+#### インパクトのある機能
+- [ ] SNSログイン（Google or LINE、OmniAuth使用）
 
-#### ④ 検索機能
-- 検索対象: 店名・ユーザー・ジャンル
-- Ransack を使用
+#### インフラ・SEO
+- [ ] OGP設定（静的、og:title / og:description / og:image）
+- [ ] 独自ドメイン反映（DNS・SSL対応、デプロイ先と合わせて作業）
 
-#### ⑤ 現在地表示機能
-- ブラウザの Geolocation API（navigator.geolocation）を使用
-- 現在地取得・現在地マーカー表示
+#### ユーザー体験
+- [ ] オートログイン（Deviseのremember_me）
+- [ ] レスポンシブ対応（Tailwindのsm/md/lgブレークポイント）
+- [ ] 利用規約・プライバシーポリシーページ（未ログインでも閲覧可）
+- [ ] ローディングアニメーション（画像アップロード等の重い処理）
+- [ ] 使い方説明（初回訪問ユーザー向けのガイド）
 
 ## ブランチ戦略
 

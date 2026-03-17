@@ -61,6 +61,8 @@ gem "brakeman", "~> 8.0", require: false
 
 # 認証
 gem "devise"
+# Rails日本語翻訳
+gem "rails-i18n"
 # 検索
 gem "ransack"
 # 環境変数を管理するためのgem
