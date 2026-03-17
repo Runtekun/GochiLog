@@ -47,8 +47,12 @@ group :development do
   gem "web-console"
 end
 
+group :development, :test do
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+end
+
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
 end
@@ -67,5 +71,3 @@ gem "rails-i18n"
 gem "ransack"
 # 環境変数を管理するためのgem
 gem "dotenv-rails"
-
-gem "minitest", "~> 5.25"
