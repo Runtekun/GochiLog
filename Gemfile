@@ -71,4 +71,3 @@ gem "rails-i18n"
 gem "ransack"
 # 環境変数を管理するためのgem
 gem "dotenv-rails"
-
