@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title><%= content_for(:title) || "GochiLog" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <%# OGP %>
+    <meta property="og:title" content="<%= content_for(:title).presence || "GochiLog | グルメレビュー" %>">
+    <meta property="og:description" content="お気に入りのお店をレビューしよう">
+    <meta property="og:image" content="<%= image_url("ogp.png") %>">
+    <meta property="og:url" content="<%= request.base_url + request.fullpath %>">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GochiLog">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="<%= content_for(:title).presence || "GochiLog | グルメレビュー" %>">
+    <meta name="twitter:description" content="お気に入りのお店をレビューしよう">
+    <meta name="twitter:image" content="<%= image_url("ogp.png") %>">
 
     <%= yield :head %>
 
