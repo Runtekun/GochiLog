@@ -1,11 +1,11 @@
 <% content_for :full_width, true %>
 
-<div class="relative min-h-screen bg-cover bg-center"
+<div class="relative h-screen bg-cover bg-center"
      style="background-image: url('<%= asset_path('top.png') %>')">
   <div class="absolute inset-0 bg-black opacity-40"></div>
   <div class="relative z-10 max-w-6xl mx-auto px-4 py-16 text-center">
-    <h1 class="text-4xl font-bold text-white mb-4">美味しいお店を見つけよう</h1>
-    <p class="text-white text-lg mb-8">みんなのグルメレビューで、あなたの次の一食を見つける</p>
+    <h1 class="text-6xl font-bold text-white mb-6 leading-tight">おいしい体験を<br>シェアしよう</h1>
+    <p class="text-white text-lg mb-8 max-w-lg mx-auto leading-relaxed">あなたのお気に入りのレストランやカフェの感動を、みんなとシェアできるグルメレビューアプリ。</p>
 
     <% if user_signed_in? %>
       <div class="flex justify-center gap-4">
@@ -15,10 +15,47 @@
     <% else %>
       <div class="flex justify-center gap-4">
         <%= link_to "新規登録", new_user_registration_path,
-            class: "bg-orange-500 text-white px-8 py-3 rounded-lg text-lg hover:bg-orange-600" %>
+            class: "bg-orange-500 text-white px-10 py-3 rounded-full text-lg font-semibold hover:bg-orange-600 transition" %>
         <%= link_to "ログイン", new_user_session_path,
-            class: "border border-white text-white px-8 py-3 rounded-lg text-lg hover:bg-white hover:text-gray-800 transition" %>
+            class: "border-2 border-white text-white px-10 py-3 rounded-full text-lg font-semibold hover:bg-white hover:text-gray-800 transition" %>
       </div>
     <% end %>
   </div>
+  <% unless user_signed_in? %>
+    <div class="absolute bottom-8 left-0 right-0 flex flex-col items-center z-10">
+      <div class="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 flex flex-col items-center gap-1">
+        <p class="text-xs text-white tracking-widest uppercase">Scroll</p>
+        <div class="animate-bounce text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
+
+<% unless user_signed_in? %>
+  <div class="bg-orange-50 py-16">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-12">使い方</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div data-controller="slide-in" class="opacity-0 translate-y-8 transition duration-700 ease-out bg-white rounded-2xl shadow-md hover:shadow-lg p-8 text-center">
+          <div class="w-14 h-14 bg-orange-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-5">1</div>
+          <h3 class="font-bold text-gray-800 mb-3">アカウント登録</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">メールアドレスで簡単に登録できます。</p>
+        </div>
+        <div data-controller="slide-in" class="opacity-0 translate-y-8 transition duration-700 ease-out delay-150 bg-white rounded-2xl shadow-md hover:shadow-lg p-8 text-center">
+          <div class="w-14 h-14 bg-orange-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-5">2</div>
+          <h3 class="font-bold text-gray-800 mb-3">お店を探す</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">マップやレビュー一覧からお気に入りのお店を見つけよう。</p>
+        </div>
+        <div data-controller="slide-in" class="opacity-0 translate-y-8 transition duration-700 ease-out delay-300 bg-white rounded-2xl shadow-md hover:shadow-lg p-8 text-center">
+          <div class="w-14 h-14 bg-orange-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-5">3</div>
+          <h3 class="font-bold text-gray-800 mb-3">レビューを投稿</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">訪れたお店の感想を写真付きで投稿しよう。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
