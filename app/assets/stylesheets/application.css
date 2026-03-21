@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+.turbo-progress-bar {
+  background-color: #f97316;
+  height: 3px;
+}
