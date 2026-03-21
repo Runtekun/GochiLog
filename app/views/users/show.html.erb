@@ -1,7 +1,7 @@
 <div class="max-w-4xl mx-auto px-4 py-8">
 
   <!-- プロフィールセクション -->
-  <div class="bg-white rounded-xl shadow p-6 mb-8 flex items-start gap-6">
+  <div class="bg-white rounded-xl shadow p-6 mb-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
     <% if @user.avatar.attached? %>
       <%= image_tag @user.avatar, class: "w-20 h-20 rounded-full object-cover flex-shrink-0" %>
     <% else %>

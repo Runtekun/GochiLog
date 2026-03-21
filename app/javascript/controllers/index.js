@@ -9,3 +9,6 @@ application.register("hello", HelloController)
 
 import SlideInController from "./slide_in_controller"
 application.register("slide-in", SlideInController)
+
+import MobileMenuController from "./mobile_menu_controller"
+application.register("mobile-menu", MobileMenuController)
