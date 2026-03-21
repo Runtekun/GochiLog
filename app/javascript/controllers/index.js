@@ -12,3 +12,6 @@ application.register("slide-in", SlideInController)
 
 import MobileMenuController from "./mobile_menu_controller"
 application.register("mobile-menu", MobileMenuController)
+
+import LoadingButtonController from "./loading_button_controller"
+application.register("loading-button", LoadingButtonController)

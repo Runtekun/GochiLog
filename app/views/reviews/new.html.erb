@@ -6,7 +6,7 @@
     <div id="map" class="w-full h-72 rounded-xl border border-gray-200"></div>
   </div>
 
-  <%= form_with model: @review, data: { turbo: false }, class: "space-y-4" do |f| %>
+  <%= form_with model: @review, data: { turbo: false, controller: "loading-button", action: "submit->loading-button#submit" }, class: "space-y-4" do |f| %>
     <input type="hidden" name="latitude" id="latitude">
     <input type="hidden" name="longitude" id="longitude">
 
@@ -56,6 +56,7 @@
     </div>
 
     <button type="submit" onclick="return validateLocation()"
+            data-loading-button-target="button"
             class="w-full bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition">
       投稿する
     </button>
