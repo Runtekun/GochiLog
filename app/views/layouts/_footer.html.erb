@@ -1,6 +1,21 @@
-<footer class="bg-white border-t border-gray-100 mt-16">
-  <div class="max-w-6xl mx-auto px-4 py-6 flex items-center justify-between text-sm text-gray-400">
-    <span>© <%= Date.current.year %> グルメレビュー</span>
-    <a href="mailto:contact@example.com" class="hover:text-gray-600 transition">お問い合わせ</a>
+<footer class="bg-gray-800">
+  <div class="max-w-6xl mx-auto px-4 py-10">
+    <div class="flex flex-col md:flex-row justify-between gap-8">
+      <div>
+        <p class="text-orange-400 font-bold text-lg">GochiLog</p>
+        <p class="text-gray-400 text-sm mt-1">お気に入りのお店をレビューしよう</p>
+      </div>
+      <div>
+        <p class="text-gray-300 text-sm font-semibold mb-3">情報</p>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><%= link_to "利用規約", terms_path, class: "hover:text-orange-400 transition" %></li>
+          <li><%= link_to "プライバシーポリシー", privacy_path, class: "hover:text-orange-400 transition" %></li>
+          <li><a href="mailto:yuuki1997sdec457108@gmail.com" class="hover:text-orange-400 transition">お問い合わせ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-700 mt-8 pt-6 text-center text-xs text-gray-500">
+      © <%= Date.current.year %> GochiLog. All rights reserved.
+    </div>
   </div>
 </footer>
