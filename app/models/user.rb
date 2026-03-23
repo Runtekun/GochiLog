@@ -43,7 +43,7 @@ class User < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     [ "reviews" ]
   end
-  
+
   # Googleからの認証情報をもとにユーザーを検索するか、新規ユーザーを作成するクラスメソッド
   def self.from_omniauth(auth)
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -62,7 +62,7 @@ class User < ApplicationRecord
       )
     end
 
-    return user
+    user
   end
 
   # ユーザーがプロフィールを更新する際に、現在のパスワードを要求するかどうかを判断するメソッド

@@ -2,7 +2,7 @@
 
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: :google_oauth2
-  
+
   def google_oauth2
     # Googleから返ってきた認証情報をもとに、既存ユーザーを検索するか、新規ユーザーを作成する
     @user = User.from_omniauth(request.env["omniauth.auth"])
