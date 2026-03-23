@@ -65,6 +65,9 @@ gem "brakeman", "~> 8.0", require: false
 
 # 認証
 gem "devise"
+gem "omniauth"
+gem "omniauth-rails_csrf_protection"
+gem "omniauth-google-oauth2"
 # Rails日本語翻訳
 gem "rails-i18n"
 # 検索
