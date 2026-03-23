@@ -2,7 +2,9 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         # OmniAuthを使用するためのモジュールを追加
+         :omniauthable, omniauth_providers: %i[google_oauth2]
 
   has_many :reviews, dependent: :destroy
   has_many :likes, dependent: :destroy
@@ -40,6 +42,27 @@ class User < ApplicationRecord
   # Ransackで検索可能な関連を指定するメソッド
   def self.ransackable_associations(auth_object = nil)
     [ "reviews" ]
+  end
+  
+  # Googleからの認証情報をもとにユーザーを検索するか、新規ユーザーを作成するクラスメソッド
+  def self.from_omniauth(auth)
+    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.name = auth.info.name
+      user.password = Devise.friendly_token[0, 20]
+    end
+
+    # 初回ログイン時にGoogleのプロフィール画像をアバターとして保存
+    if user.persisted? && !user.avatar.attached? && auth.info.image.present?
+      require "open-uri"
+      user.avatar.attach(
+        io: URI.open(auth.info.image),
+        filename: "avatar_#{auth.uid}.jpg",
+        content_type: "image/jpeg"
+      )
+    end
+
+    return user
   end
 
   # ユーザーがプロフィールを更新する際に、現在のパスワードを要求するかどうかを判断するメソッド
