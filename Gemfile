@@ -58,7 +58,7 @@ group :test do
 end
 
 gem "tailwindcss-rails"
-gem "tailwindcss-ruby", "3.4.17"
+gem "tailwindcss-ruby", "4.2.1"
 
 # brakenmanをアップデートして、セキュリティの脆弱性を修正するために、バージョン8.0以上を指定
 gem "brakeman", "~> 8.0", require: false
