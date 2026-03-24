@@ -3,13 +3,13 @@
     <!-- ロゴ -->
     <% if user_signed_in? %>
       <%= link_to reviews_path, class: "flex items-center gap-2" do %>
-        <span class="text-xl">🍽️</span>
-        <span class="text-lg font-semibold text-gray-800">グルメレビュー</span>
+        <%= image_tag "ogp.png", class: "w-8 h-8 object-cover rounded" %>
+        <span class="text-lg font-semibold text-gray-800">GochiLog</span>
       <% end %>
     <% else %>
       <%= link_to root_path, class: "flex items-center gap-2" do %>
-        <span class="text-xl">🍽️</span>
-        <span class="text-lg font-semibold text-gray-800">グルメレビュー</span>
+        <%= image_tag "ogp.png", class: "w-8 h-8 object-cover rounded" %>
+        <span class="text-lg font-semibold text-gray-800">GochiLog</span>
       <% end %>
     <% end %>
 
