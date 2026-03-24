@@ -19,6 +19,7 @@
   <%= form_with model: @review, data: { turbo: false, controller: "loading-button", action: "submit->loading-button#submit" }, class: "space-y-4" do |f| %>
     <input type="hidden" name="latitude" id="latitude">
     <input type="hidden" name="longitude" id="longitude">
+    <input type="hidden" name="address" id="address">
 
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -103,9 +104,11 @@ function initMap() {
     );
   });
 
+  const geocoder = new google.maps.Geocoder();
+
   const autocomplete = new google.maps.places.Autocomplete(
     document.getElementById("shop_name"),
-    { types: ["establishment"], fields: ["name", "geometry"] }
+    { types: ["establishment"], fields: ["name", "geometry", "formatted_address"] }
   );
 
   autocomplete.addListener("place_changed", () => {
@@ -113,6 +116,7 @@ function initMap() {
     if (!place.geometry) return;
 
     document.getElementById("shop_name").value = place.name;
+    document.getElementById("address").value = place.formatted_address || "";
 
     const lat = place.geometry.location.lat();
     const lng = place.geometry.location.lng();
@@ -147,6 +151,12 @@ function initMap() {
     });
 
     document.getElementById("location-warning").classList.add("hidden");
+
+    geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+      if (status === "OK" && results[0]) {
+        document.getElementById("address").value = results[0].formatted_address;
+      }
+    });
   });
 }
 
