@@ -8,6 +8,9 @@
 
     <div class="p-6">
       <h1 class="text-2xl font-bold text-gray-800 mb-2"><%= @review.shop.name %></h1>
+      <% if @review.shop.address.present? %>
+        <p class="text-sm text-gray-500 mb-3">📍 <%= @review.shop.address %></p>
+      <% end %>
 
       <% if @review.genre %>
         <span class="inline-block px-3 py-1 rounded-full text-sm font-medium mb-3 <%= genre_badge_class(@review.genre.name) %>">
