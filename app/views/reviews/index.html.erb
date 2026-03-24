@@ -30,7 +30,7 @@
             <% if review.image.attached? %>
               <%= image_tag review.image, class: "w-full h-48 object-cover" %>
             <% else %>
-              <div class="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-4xl">🍽️</div>
+              <%= image_tag "ogp.png", class: "w-full h-48 object-cover" %>
             <% end %>
             <% if review.genre %>
               <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs font-medium <%= genre_badge_class(review.genre.name) %>">

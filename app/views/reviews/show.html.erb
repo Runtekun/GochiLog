@@ -4,6 +4,8 @@
   <div class="bg-white rounded-xl shadow overflow-hidden">
     <% if @review.image.attached? %>
       <%= image_tag @review.image, class: "w-full h-64 object-cover" %>
+    <% else %>
+      <%= image_tag "ogp.png", class: "w-full h-64 object-cover" %>
     <% end %>
 
     <div class="p-6">
