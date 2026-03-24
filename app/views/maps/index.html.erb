@@ -1,7 +1,7 @@
 <div class="relative w-full" style="height: calc(100vh - 64px);">
   <div id="map" class="w-full h-full"></div>
   <button id="locate-btn"
-    class="absolute bottom-8 right-4 z-10 bg-white border border-gray-300 rounded-full shadow-md p-3 hover:bg-gray-50 transition"
+    class="absolute bottom-8 left-4 z-10 bg-white border border-gray-300 rounded-full shadow-md p-3 hover:bg-gray-50 transition"
     title="現在地を表示">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/>
@@ -49,9 +49,15 @@ function initMap() {
         map.panTo(pos);
         map.setZoom(15);
       },
-      () => {
-        alert("現在地を取得できませんでした。位置情報の許可を確認してください。");
-      }
+      (error) => {
+        const messages = {
+          1: "位置情報の許可が拒否されています。ブラウザの設定を確認してください。",
+          2: "位置情報を取得できませんでした。",
+          3: "位置情報の取得がタイムアウトしました。もう一度お試しください。"
+        };
+        alert(messages[error.code] || "現在地を取得できませんでした。");
+      },
+      { timeout: 30000, maximumAge: 300000, enableHighAccuracy: false }
     );
   });
 
