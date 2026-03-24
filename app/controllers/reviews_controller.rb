@@ -22,7 +22,8 @@ class ReviewsController < ApplicationController
     @shop = Shop.create!(
       name: params[:shop_name],
       latitude: params[:latitude],
-      longitude: params[:longitude]
+      longitude: params[:longitude],
+      address: params[:address]
     )
 
     @review = @shop.reviews.build(review_params)
