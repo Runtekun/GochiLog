@@ -74,5 +74,7 @@ gem "rails-i18n"
 gem "ransack"
 # ページネーション
 gem "kaminari"
+# AWS S3
+gem "aws-sdk-s3", require: false
 # 環境変数を管理するためのgem
 gem "dotenv-rails"
