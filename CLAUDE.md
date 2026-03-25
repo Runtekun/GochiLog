@@ -13,22 +13,36 @@
 - PostgreSQL
 - Tailwind CSS（tailwindcss-rails）
 - Hotwire（Turbo + Stimulus）
-- Devise（認証）
-- Active Storage（画像アップロード）
+- Devise（認証）+ OmniAuth（Googleログイン）
+- Active Storage（画像アップロード）+ AWS S3（本番ストレージ）
+- Ransack（検索）
+- Kaminari（ページネーション）
+- Google Maps JavaScript API + Places API（地図・Autocomplete）
 
 ## モデル構成
 
 - `User` - Deviseで管理。name, bio, avatar(ActiveStorage)を持つ
-- `Shop` - 店舗。name, latitude, longitude
+- `Shop` - 店舗。name, latitude, longitude, address
 - `Review` - レビュー。body, rating(1-5), image(ActiveStorage)。belongs_to :user, :shop
+- `Comment` - コメント。body。belongs_to :user, :review
+- `Like` - いいね。belongs_to :user, :review
+- `Genre` - ジャンル。name
+- `Relationship` - フォロー。follower_id, followed_id
 
 ## ルーティング
 
 ```
-devise_for :users, controllers: { registrations: "users/registrations" }
-resources :users, only: [:show]
-resources :reviews
+devise_for :users, controllers: { registrations: "users/registrations", omniauth_callbacks: "users/omniauth_callbacks" }
+resources :users, only: [:show, :index] do
+  resource :follow, only: [:create, :destroy]
+end
+resources :reviews do
+  resource :like, only: [:create, :destroy]
+  resources :comments, only: [:create, :destroy]
+end
 get "maps", to: "maps#index"
+get "terms", to: "static_pages#terms"
+get "privacy", to: "static_pages#privacy"
 root "home#index"
 ```
 
@@ -71,33 +85,30 @@ edit「キャンセル」→ user_path(current_user)（show）
 - ③ フォロー機能（relationships テーブル、Turbo Stream）
 - ④ 検索機能（Ransack、オートコンプリート datalist）
 - ⑤ 現在地表示機能（Geolocation API、青丸マーカー）
+- ⑥ SNSログイン（Google、OmniAuth）
+- ⑦ OGP設定（静的、og:title / og:description / og:image）
+- ⑧ レスポンシブ対応（Tailwind sm/md/lgブレークポイント）
+- ⑨ オートログイン（Deviseのremember_me）
+- ⑩ 利用規約・プライバシーポリシーページ
+- ⑪ ローディングアニメーション（Stimulusローディングボタン）
+- ⑫ 地図改善（現在地ボタン位置修正・Geolocationオプション改善）
+- ⑬ Places Autocomplete（店名検索・地図自動移動）
+- ⑭ 店舗住所表示（Geocoding API逆ジオコーディング）
+- ⑮ コメント機能（comments テーブル、Turbo Stream）
+- ⑯ ページネーション（Kaminari、レビュー一覧12件/ページ）
+- ⑰ AWS S3連携（本番環境の画像ストレージ）
+- ⑱ RSpec（リクエストテスト + モデルテスト）
+- ⑲ CI（GitHub Actions、RSpecと連携）
+- ⑳ Rubocop（Lintチェック）
 
-### 本リリースに向けたロードマップ
-
-#### 品質・開発基盤
-- [ ] RSpec（リクエストテスト中心 + モデルテスト）
-- [ ] CI（GitHub Actions、RSpecと連携）
-- [ ] Rubocop（Lintチェック・リファクタリング）
-
-#### インパクトのある機能
-- [ ] SNSログイン（Google or LINE、OmniAuth使用）
-
-#### インフラ・SEO
-- [ ] OGP設定（静的、og:title / og:description / og:image）
-- [ ] 独自ドメイン反映（DNS・SSL対応、デプロイ先と合わせて作業）
-
-#### ユーザー体験
-- [ ] オートログイン（Deviseのremember_me）
-- [ ] レスポンシブ対応（Tailwindのsm/md/lgブレークポイント）
-- [ ] 利用規約・プライバシーポリシーページ（未ログインでも閲覧可）
-- [ ] ローディングアニメーション（画像アップロード等の重い処理）
-- [ ] 使い方説明（初回訪問ユーザー向けのガイド）
+### 残りのロードマップ
+- [ ] 独自ドメイン反映（DNS・SSL対応）
 
 ## ブランチ戦略
 
 - `main` - 本番
 - `feature/*` - 機能開発
-- 現在のブランチ: `feature/profile`
+- 現在のブランチ: `main`
 
 ## 禁止事項
 
