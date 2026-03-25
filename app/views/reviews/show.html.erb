@@ -61,6 +61,16 @@
     </div>
   </div>
 
+  <div class="mt-6 bg-white rounded-xl shadow p-6">
+    <h2 class="font-bold text-gray-700 mb-4">コメント（<%= @review.comments.count %>）</h2>
+    <div id="comments">
+      <%= render @review.comments.order(created_at: :desc).includes(:user) %>
+    </div>
+    <% if user_signed_in? %>
+      <%= render "comments/form", review: @review, comment: @review.comments.build %>
+    <% end %>
+  </div>
+
   <div class="mt-6">
     <h2 class="font-bold text-gray-700 mb-2">📍 店舗の場所</h2>
     <div id="map" class="w-full h-64 rounded-xl border border-gray-200"></div>

@@ -1,0 +1,8 @@
+<div id="comment_form">
+  <%= form_with model: [review, comment], data: { turbo_stream: true }, class: "flex gap-2 mt-4" do |f| %>
+    <%= f.text_area :body, rows: 2, placeholder: "コメントを入力...",
+        class: "flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none" %>
+    <%= f.submit "投稿",
+        class: "bg-orange-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-orange-600 transition self-end cursor-pointer" %>
+  <% end %>
+</div>
