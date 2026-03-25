@@ -72,5 +72,7 @@ gem "omniauth-google-oauth2"
 gem "rails-i18n"
 # 検索
 gem "ransack"
+# ページネーション
+gem "kaminari"
 # 環境変数を管理するためのgem
 gem "dotenv-rails"
