@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   resources :reviews do
     resource :like, only: [ :create, :destroy ]
+    resources :comments, only: [ :create, :destroy ]
   end
 
   get "maps", to: "maps#index"
