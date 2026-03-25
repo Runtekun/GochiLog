@@ -6,7 +6,7 @@ class ReviewsController < ApplicationController
 
   def index
     @q = Review.ransack(params[:q])
-    @reviews = @q.result.includes(:user, :shop, :genre).order(created_at: :desc)
+    @reviews = @q.result.includes(:user, :shop, :genre).order(created_at: :desc).page(params[:page]).per(12)
     @autocomplete_items = Shop.pluck(:name) + User.pluck(:name) + Genre.pluck(:name)
   end
 
