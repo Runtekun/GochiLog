@@ -1,0 +1,25 @@
+<div id="comment_<%= comment.id %>" class="flex gap-3 py-3 border-b border-gray-100 last:border-0">
+  <% if comment.user.avatar.attached? %>
+    <%= image_tag comment.user.avatar, class: "w-8 h-8 rounded-full object-cover flex-shrink-0" %>
+  <% else %>
+    <div class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-sm flex-shrink-0">
+      <%= comment.user.name.first.upcase %>
+    </div>
+  <% end %>
+  <div class="flex-1">
+    <div class="flex items-center justify-between">
+      <span class="text-sm font-medium text-gray-800"><%= comment.user.name %></span>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-gray-400"><%= comment.created_at.strftime("%Y/%m/%d") %></span>
+        <% if user_signed_in? && comment.user == current_user %>
+          <%= button_to review_comment_path(comment.review, comment), method: :delete,
+              data: { turbo_stream: true, turbo_confirm: "削除しますか？" },
+              class: "text-xs text-red-400 hover:text-red-600" do %>
+            削除
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <p class="text-sm text-gray-700 mt-1"><%= comment.body %></p>
+  </div>
+</div>
