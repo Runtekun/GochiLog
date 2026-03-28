@@ -1,3 +1,5 @@
+require "open-uri"
+
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_review, only: [ :show, :edit, :update, :destroy ]
@@ -28,6 +30,9 @@ class ReviewsController < ApplicationController
 
     @review = @shop.reviews.build(review_params)
     @review.user = current_user
+
+    # Shopの写真URLが提供されている場合は、レビューに写真を添付
+    attach_shop_photo(@review, params[:shop_photo_url])
 
     if @review.save
       redirect_to reviews_path, notice: "レビューを投稿しました！"
@@ -66,5 +71,12 @@ class ReviewsController < ApplicationController
 
   def set_genres
     @genres = Genre.all
+  end
+
+  def attach_shop_photo(review, url)
+    return if review.image.attached? || url.blank?
+    review.image.attach(io: URI.open(url), filename: "shop_photo.jpg", content_type: "image/jpeg")
+  rescue StandardError
+    # 写真取得失敗時はそのまま続行
   end
 end
