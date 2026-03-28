@@ -10,6 +10,10 @@
   </button>
 </div>
 
+<% content_for :head do %>
+  <meta name="turbo-visit-control" content="reload">
+<% end %>
+
 <script>
 const shopsData = <%= @shops_json.html_safe %>;
 

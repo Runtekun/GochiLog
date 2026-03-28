@@ -77,6 +77,10 @@
   </div>
 </div>
 
+<% content_for :head do %>
+  <meta name="turbo-visit-control" content="reload">
+<% end %>
+
 <script>
 function initMap() {
   const lat = <%= @review.shop.latitude %>;
