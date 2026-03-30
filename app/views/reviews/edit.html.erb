@@ -1,7 +1,27 @@
+<% content_for :head do %>
+  <meta name="turbo-visit-control" content="reload">
+<% end %>
+
 <div class="max-w-2xl mx-auto px-4 py-8">
   <h1 class="text-2xl font-bold text-gray-800 mb-6">レビューを編集</h1>
 
+  <div class="mb-6">
+    <p class="text-sm text-gray-500 mb-2">📍 店名を入力して候補を選ぶか、地図をクリックしてマーカーを置いて場所を変更できます</p>
+    <div id="map" class="w-full h-64 rounded-xl border border-gray-200"></div>
+  </div>
+
   <%= form_with model: @review, data: { turbo: false, controller: "loading-button", action: "submit->loading-button#submit" }, class: "space-y-4" do |f| %>
+    <input type="hidden" name="shop_photo_url" id="shop_photo_url">
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">店名</label>
+      <input type="text" name="shop_name" id="shop_name" value="<%= @review.shop.name %>" required
+             autocomplete="off"
+             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+    </div>
+    <input type="hidden" name="latitude" id="latitude" value="<%= @review.shop.latitude %>">
+    <input type="hidden" name="longitude" id="longitude" value="<%= @review.shop.longitude %>">
+    <input type="hidden" name="address" id="address" value="<%= @review.shop.address %>">
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-1">
         評価 <span class="text-red-500">*</span>
@@ -33,14 +53,23 @@
 
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-1">写真</label>
-      <% if @review.image.attached? %>
-        <div class="mb-2">
-          <%= image_tag @review.image, class: "w-32 h-24 object-cover rounded" %>
-          <p class="text-xs text-gray-400 mt-1">新しい画像を選択すると差し替えられます</p>
-        </div>
-      <% end %>
+      <div id="photo-preview" class="mb-2 <%= @review.image.attached? ? '' : 'hidden' %>">
+        <% if @review.image.attached? %>
+          <%= image_tag @review.image, id: "preview-img", class: "w-32 h-24 object-cover rounded" %>
+        <% else %>
+          <img id="preview-img" src="" class="w-32 h-24 object-cover rounded hidden">
+        <% end %>
+        <p class="text-xs text-gray-400 mt-1">新しい画像を選択すると差し替えられます</p>
+      </div>
       <%= f.file_field :image, accept: "image/*",
           class: "w-full border border-gray-300 rounded-lg px-3 py-2" %>
+      <p class="text-xs text-gray-400 mt-2">※ 店舗写真の自動取得はGoogleに登録済みの店舗のみ対応しています</p>
+      <p class="text-xs text-gray-400">※ 手動でアップロードした画像が優先されます</p>
+      <button type="button" id="fetch-photo-btn"
+              class="mt-2 text-sm text-orange-500 border border-orange-400 px-3 py-1 rounded-lg hover:bg-orange-50 transition">
+        店舗写真を自動取得
+      </button>
+      <p id="fetch-status" class="text-xs text-gray-400 mt-1 hidden"></p>
     </div>
 
     <div class="flex gap-3">
@@ -52,3 +81,106 @@
     </div>
   <% end %>
 </div>
+
+<script>
+const shopName = "<%= j @review.shop.name %>";
+
+function initMap() {
+  const lat = <%= @review.shop.latitude %>;
+  const lng = <%= @review.shop.longitude %>;
+
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat, lng },
+    zoom: 15
+  });
+
+  const geocoder = new google.maps.Geocoder();
+
+  let marker = new google.maps.Marker({
+    position: { lat, lng },
+    map,
+    title: "<%= j @review.shop.name %>",
+    draggable: true,
+    animation: google.maps.Animation.DROP
+  });
+
+  function updatePosition(latLng) {
+    document.getElementById("latitude").value = latLng.lat();
+    document.getElementById("longitude").value = latLng.lng();
+    geocoder.geocode({ location: latLng }, (results, status) => {
+      if (status === "OK" && results[0]) {
+        document.getElementById("address").value = results[0].formatted_address;
+      }
+    });
+  }
+
+  marker.addListener("dragend", (event) => updatePosition(event.latLng));
+
+  map.addListener("click", (event) => {
+    marker.setPosition(event.latLng);
+    updatePosition(event.latLng);
+  });
+
+  const autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById("shop_name"),
+    { types: ["establishment"], fields: ["name", "geometry", "formatted_address", "photos"] }
+  );
+
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) return;
+
+    document.getElementById("shop_name").value = place.name;
+    document.getElementById("address").value = place.formatted_address || "";
+
+    const newLat = place.geometry.location.lat();
+    const newLng = place.geometry.location.lng();
+    document.getElementById("latitude").value = newLat;
+    document.getElementById("longitude").value = newLng;
+
+    marker.setPosition({ lat: newLat, lng: newLng });
+    map.panTo({ lat: newLat, lng: newLng });
+    map.setZoom(16);
+
+    if (place.photos && place.photos.length > 0) {
+      const photoUrl = place.photos[0].getUrl({ maxWidth: 800, maxHeight: 600 });
+      document.getElementById("shop_photo_url").value = photoUrl;
+
+      const previewImg = document.getElementById("preview-img");
+      previewImg.src = photoUrl;
+      previewImg.classList.remove("hidden");
+      document.getElementById("photo-preview").classList.remove("hidden");
+    } else {
+      document.getElementById("shop_photo_url").value = "";
+    }
+  });
+
+  const service = new google.maps.places.PlacesService(document.createElement("div"));
+
+  document.getElementById("fetch-photo-btn").addEventListener("click", () => {
+    const statusEl = document.getElementById("fetch-status");
+    statusEl.textContent = "取得中...";
+    statusEl.classList.remove("hidden");
+
+    service.findPlaceFromQuery(
+      { query: shopName, fields: ["photos"] },
+      (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results[0]?.photos?.length > 0) {
+          const photoUrl = results[0].photos[0].getUrl({ maxWidth: 800, maxHeight: 600 });
+          document.getElementById("shop_photo_url").value = photoUrl;
+
+          const previewImg = document.getElementById("preview-img");
+          previewImg.src = photoUrl;
+          previewImg.classList.remove("hidden");
+          document.getElementById("photo-preview").classList.remove("hidden");
+
+          statusEl.textContent = "写真を取得しました。更新ボタンで保存されます。";
+        } else {
+          statusEl.textContent = "写真が見つかりませんでした。";
+        }
+      }
+    );
+  });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places&callback=initMap" async defer></script>
