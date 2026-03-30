@@ -46,7 +46,16 @@ class ReviewsController < ApplicationController
   end
 
   def update
+    @review.shop.update(
+      name: params[:shop_name],
+      latitude: params[:latitude],
+      longitude: params[:longitude],
+      address: params[:address]
+    ) if params[:shop_name].present? || params[:latitude].present?
+
     if @review.update(review_params)
+      # Shopの写真URLが提供されている場合は、レビューの写真を更新
+      replace_shop_photo(@review, params[:shop_photo_url]) unless params[:review][:image].present?
       redirect_to @review, notice: "レビューを更新しました！"
     else
       render :edit, status: :unprocessable_entity
@@ -78,5 +87,13 @@ class ReviewsController < ApplicationController
     review.image.attach(io: URI.open(url), filename: "shop_photo.jpg", content_type: "image/jpeg")
   rescue StandardError
     # 写真取得失敗時はそのまま続行
+  end
+
+  def replace_shop_photo(review, url)
+    return if url.blank?
+    review.image.purge if review.image.attached?
+    review.image.attach(io: URI.open(url), filename: "shop_photo.jpg", content_type: "image/jpeg")
+  rescue StandardError => e
+    Rails.logger.error "replace_shop_photo failed: #{e.message}"
   end
 end
