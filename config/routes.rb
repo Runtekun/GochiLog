@@ -21,6 +21,12 @@ Rails.application.routes.draw do
     resources :comments, only: [ :create, :destroy ]
   end
 
+  resources :notifications, only: [ :index ] do
+    collection do
+      patch :read_all
+    end
+  end
+
   get "maps", to: "maps#index"
   get "terms", to: "static_pages#terms"
   get "privacy", to: "static_pages#privacy"

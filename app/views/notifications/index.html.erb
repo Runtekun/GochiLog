@@ -1,0 +1,46 @@
+<div class="max-w-2xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">通知</h1>
+
+  <% if @notifications.empty? %>
+    <p class="text-gray-500 text-sm">通知はありません</p>
+  <% else %>
+    <div class="space-y-3">
+      <% @notifications.each do |notification| %>
+        <% case notification.action %>
+        <% when "like" %>
+          <%= link_to review_path(notification.review_id), class: "flex items-center gap-3 bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition" do %>
+            <div class="w-9 h-9 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-sm shrink-0">
+              <%= notification.visitor.name.first.upcase %>
+            </div>
+            <p class="text-sm text-gray-700">
+              <span class="font-semibold"><%= notification.visitor.name %></span>さんがあなたのレビューにいいねしました
+            </p>
+            <span class="ml-auto text-xs text-gray-400 shrink-0"><%= notification.created_at.strftime("%m/%d") %></span>
+          <% end %>
+
+        <% when "comment" %>
+          <%= link_to review_path(notification.review_id), class: "flex items-center gap-3 bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition" do %>
+            <div class="w-9 h-9 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-sm shrink-0">
+              <%= notification.visitor.name.first.upcase %>
+            </div>
+            <p class="text-sm text-gray-700">
+              <span class="font-semibold"><%= notification.visitor.name %></span>さんがあなたのレビューにコメントしました
+            </p>
+            <span class="ml-auto text-xs text-gray-400 shrink-0"><%= notification.created_at.strftime("%m/%d") %></span>
+          <% end %>
+
+        <% when "follow" %>
+          <%= link_to user_path(notification.visitor_id), class: "flex items-center gap-3 bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition" do %>
+            <div class="w-9 h-9 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-sm shrink-0">
+              <%= notification.visitor.name.first.upcase %>
+            </div>
+            <p class="text-sm text-gray-700">
+              <span class="font-semibold"><%= notification.visitor.name %></span>さんにフォローされました
+            </p>
+            <span class="ml-auto text-xs text-gray-400 shrink-0"><%= notification.created_at.strftime("%m/%d") %></span>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
