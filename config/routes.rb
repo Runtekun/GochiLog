@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :comments, only: [ :create, :destroy ]
   end
 
-  resources :notifications, only: [:index] do
+  resources :notifications, only: [ :index ] do
     collection do
       patch :read_all
     end
