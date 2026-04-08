@@ -26,11 +26,18 @@
     <% @reviews.each do |review| %>
       <div class="relative bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden">
         <%= link_to review_path(review), class: "block" do %>
-          <div class="relative">
+          <div class="relative bg-orange-100 h-48 img-loading">
+            <div class="loading-placeholder absolute inset-0 flex flex-col items-center justify-center gap-1">
+              <svg class="animate-spin w-6 h-6 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+              </svg>
+              <span class="text-xs text-orange-400">読み込み中...</span>
+            </div>
             <% if review.image.attached? %>
-              <%= image_tag review.image, class: "w-full h-48 object-cover" %>
+              <%= image_tag review.image, class: "w-full h-48 object-cover relative z-10 opacity-0 transition-opacity duration-300", onload: "this.style.opacity='1'; this.closest('.img-loading').querySelector('.loading-placeholder').style.display='none'" %>
             <% else %>
-              <%= image_tag "ogp.png", class: "w-full h-48 object-cover" %>
+              <%= image_tag "ogp.png", class: "w-full h-48 object-cover relative z-10 opacity-0 transition-opacity duration-300", onload: "this.style.opacity='1'; this.closest('.img-loading').querySelector('.loading-placeholder').style.display='none'" %>
             <% end %>
             <% if review.genre %>
               <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs font-medium <%= genre_badge_class(review.genre.name) %>">
