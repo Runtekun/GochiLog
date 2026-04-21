@@ -34,4 +34,13 @@ Rails.application.routes.draw do
   resources :users, only: [ :show, :index ] do
     resource :follow, only: [ :create, :destroy ]
   end
+
+  namespace :admin do
+    get "login", to: "sessions#new"
+    post "login", to: "sessions#create"
+    delete "logout", to: "sessions#destroy"
+    root to: "dashboard#index"
+    resources :users, only: [ :index, :destroy ]
+    resources :reviews, only: [ :index, :destroy ]
+  end
 end
