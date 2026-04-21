@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理画面 | GochiLog</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+
+    <!-- ヘッダー -->
+    <header class="bg-gray-800 text-white px-6 py-4 flex items-center justify-between">
+      <span class="font-bold text-lg">GochiLog 管理画面</span>
+      <div class="flex items-center gap-4">
+        <span class="text-sm text-gray-300"><%= current_user.email %></span>
+        <%= button_to "ログアウト", admin_logout_path, method: :delete,
+            class: "text-sm text-red-400 hover:text-red-300 transition" %>
+      </div>
+    </header>
+
+    <div class="flex">
+      <!-- サイドバー -->
+      <aside class="w-48 bg-gray-700 text-white min-h-screen py-6">
+        <nav class="space-y-1 px-3">
+          <%= link_to "ダッシュボード", admin_root_path,
+              class: "flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-gray-600 transition" %>
+          <%= link_to "ユーザー管理", admin_users_path,
+              class: "flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-gray-600 transition" %>
+          <%= link_to "レビュー管理", admin_reviews_path,
+              class: "flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-gray-600 transition" %>
+        </nav>
+      </aside>
+
+      <!-- メインコンテンツ -->
+      <main class="flex-1 p-8">
+        <% if notice %>
+          <div class="mb-4 bg-green-100 text-green-700 px-4 py-3 rounded-lg">
+            <%= notice %>
+          </div>
+        <% end %>
+        <% if alert %>
+          <div class="mb-4 bg-red-100 text-red-700 px-4 py-3 rounded-lg">
+            <%= alert %>
+          </div>
+        <% end %>
+        <%= yield %>
+      </main>
+    </div>
+
+    <!-- フッター -->
+    <footer class="bg-gray-800 text-gray-400 text-center text-sm py-4">
+      &copy; GochiLog Admin
+    </footer>
+  </body>
+</html>
