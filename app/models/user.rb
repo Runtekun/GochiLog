@@ -6,6 +6,9 @@ class User < ApplicationRecord
          # OmniAuthを使用するためのモジュールを追加
          :omniauthable, omniauth_providers: %i[google_oauth2]
 
+  # ユーザーロールの定義（一般ユーザーと管理者）
+  enum role: { general: 0, admin: 1 }
+
   has_many :reviews, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :active_notifications, class_name: "Notification", foreign_key: "visitor_id", dependent: :destroy
