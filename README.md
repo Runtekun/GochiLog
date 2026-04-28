@@ -121,6 +121,20 @@ MVP
 | ライブラリ | devise / geocoder / kaminari / ransack |
 | 外部API | Google Maps API | 
 
+# ■ 技術選定理由
+
+| 技術 | 選定理由 |
+| --- | --- |
+| Ruby on Rails | 開発速度が高く、Webアプリに必要な機能が揃っているフルスタックフレームワーク |
+| PostgreSQL | 本番環境（Render）との互換性が高く、地理情報（緯度・経度）の管理にも適している |
+| Tailwind CSS | ユーティリティファーストで素早くスタイリングでき、レスポンシブ対応が容易 |
+| Hotwire（Turbo + Stimulus） | Railsとの親和性が高く、JavaScriptの記述量を最小限にしつつSPA的なUXを実現できる。いいね・コメント・フォローのリアルタイム更新に活用 |
+| Devise | Rails向けの認証gemとして実績があり、OmniAuth連携やremember_meなどの機能を短期間で実装できる |
+| Active Storage + AWS S3 | Railsに標準搭載の画像管理機能で導入コストが低く、本番環境ではS3に切り替えることで安定したストレージを確保できる |
+| Google Maps API | 飲食店の位置情報表示・Places Autocompleteなど地図機能に必要な機能が揃っており、ドキュメントが充実している |
+| Ransack | Railsと親和性が高く、モデルの検索機能を少ない記述量で実装できる |
+| Kaminari | Railsで広く使われているページネーションgemで、Ransackとの組み合わせが容易 |
+
 # ■ ER図
 
 ![alt text](image.png)
@@ -129,4 +143,3 @@ MVP
 
 近日中に公開予定
 
-https://www.figma.com/make/telPaUVUYb2WwyJBLtoORT/GochiLog?p=f&t=FnTdhjS7qyvcOQS0-0
