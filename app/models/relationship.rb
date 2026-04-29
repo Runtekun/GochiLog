@@ -9,6 +9,7 @@ class Relationship < ApplicationRecord
 
   private
 
+  # フォローの通知を作成するメソッド
   def create_notification
     Notification.create(
       visitor_id: follower_id,
