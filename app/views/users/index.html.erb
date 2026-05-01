@@ -16,8 +16,8 @@
           <div class="min-w-0">
             <p class="font-bold text-gray-800 truncate"><%= user.name %></p>
             <p class="text-sm text-gray-500 truncate"><%= user.bio.present? ? user.bio : "自己紹介はまだありません" %></p>
-            <p class="text-xs text-gray-400 mt-1">
-              フォロワー <%= user.followers.count %> · フォロー中 <%= user.following.count %>
+            <p class="text-xs text-gray-400 mt-1" data-user-id="<%= user.id %>">
+              フォロワー <span data-followers-count="<%= user.id %>"><%= user.followers.count %></span> · フォロー中 <span data-following-count="<%= user.id %>"><%= user.following.count %></span>
             </p>
           </div>
         <% end %>
