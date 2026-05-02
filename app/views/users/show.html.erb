@@ -13,9 +13,9 @@
     <div class="flex-1">
       <h1 class="text-xl font-bold text-gray-800 mb-1"><%= @user.name %></h1>
       <p class="text-gray-500 text-sm mb-3"><%= @user.bio.present? ? @user.bio : "自己紹介はまだありません" %></p>
-      <div class="flex items-center gap-4 mb-3 text-sm text-gray-500">
-        <span><span class="font-bold text-gray-800"><%= @user.followers.count %></span> フォロワー</span>
-        <span><span class="font-bold text-gray-800"><%= @user.following.count %></span> フォロー中</span>
+      <div class="flex items-center gap-4 mb-3 text-sm text-gray-500" data-user-id="<%= @user.id %>">
+        <span><span class="font-bold text-gray-800" data-followers-count="<%= @user.id %>"><%= @user.followers.count %></span> フォロワー</span>
+        <span><span class="font-bold text-gray-800" data-following-count="<%= @user.id %>"><%= @user.following.count %></span> フォロー中</span>
       </div>
       <% if current_user == @user %>
         <%= link_to "プロフィールを編集", edit_user_registration_path,

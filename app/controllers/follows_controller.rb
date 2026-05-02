@@ -4,6 +4,7 @@ class FollowsController < ApplicationController
 
   def create
     current_user.follow(@user)
+    broadcast_follow_counts
     respond_to do |format|
       format.turbo_stream # Turboリクエストの場合は create.turbo_stream.erb を使って画面の一部（フォロー）だけ更新する。
       format.html { redirect_to @user } # HTMLリクエストの場合、フォロー後にユーザープロフィールへ遷移する。
@@ -22,5 +23,19 @@ class FollowsController < ApplicationController
 
   def set_user
     @user = User.find(params[:user_id])
+  end
+
+  # フォロー作成時にフォロワー数・フォロー中数をリアルタイムでブロードキャストする
+  def broadcast_follow_counts
+    FollowsChannel.broadcast_to(@user, {
+      user_id: @user.id,
+      followers_count: @user.followers.count,
+      following_count: @user.following.count
+    })
+    FollowsChannel.broadcast_to(current_user, {
+      user_id: current_user.id,
+      followers_count: current_user.followers.count,
+      following_count: current_user.following.count
+    })
   end
 end
