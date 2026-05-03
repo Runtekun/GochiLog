@@ -3,6 +3,7 @@ import "@hotwired/turbo-rails"
 import "./controllers"
 import "./channels/likes_channel"
 import "./channels/follows_channel"
+import "./channels/notifications_channel"
 
 // アバタードロップダウン
 document.addEventListener("turbo:load", function() {
