@@ -4,7 +4,7 @@ GochiLog は、グルメ体験を記録・共有できるレビューアプリ�
 お気に入りのお店をマップ上で探したり、フォローしているユーザーのレビューを通じて新しいお店と出会えます。
 
 ## URL
-https://gochi-log.onrender.com
+https://gochilog.onrender.com/
 
 　
 
